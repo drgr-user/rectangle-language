@@ -1,0 +1,22 @@
+#init
+workarea = {800, +1000, 255}
+rectangle = {-20 , 0, 27, +34, 200, Rect1}
+rectangle = {20, +20 , 530, 146, +8, Rect2}
+rectangle = { +50, 80, 126, 363, 65 , Rect3 }
+rectangle = {120, +120, 53 , 486, +128, Rect4}
+rectangle = {+350, 580 , 26, 590, 165, Rect5}
+rectangle = {620 , +20, 12, 36, +78, Rect6}
+rectangle = { +250, 980, 6, 43 , 205 , Rect7 }
+rectangle = {+350, 780, 26, 50, 165, Rect8}
+rectangle = {620 , +620, 12, 86, 188, Rect9}
+rectangle = {+150 , 480, 6, 43, 5, Rect10}
+rectangle = {+35 , 599, 26, 50, 65, Rect11 }
+rectangle = {20, +179, 12, 56, +38 , Rect12 }
+rectangle = {+700, 0, 600, 512, 215, Rect13}
+rectangle = {0, 950, 234, 143, 215, Rect13}
+#move
+Rect2.left = -20
+Rect11.left = 120
+Rect9.top = +50
+Rect12.left = 800
+Rect6.top = 930
