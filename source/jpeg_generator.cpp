@@ -9,7 +9,7 @@ void myOutput(unsigned char byte){
 	myFile << byte;
 }
 
-int jpeg_generator(WorkArea wa){
+int JpegGenerator(WorkArea wa){
 
 	const auto width = wa.width;
 	const auto height = wa.height;

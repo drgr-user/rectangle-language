@@ -28,11 +28,11 @@ private:
 	std::list<int> rec_seq;
 
 public:
-	WorkArea get_workarea() {
+	WorkArea GetWorkarea() {
 		return this->work_area;
 	}
 
-	bool make_workarea(std::vector<std::string>  smt) {
+	bool MakeWorkarea(std::vector<std::string>  smt) {
 
 		int height, width, color;
 		std::stringstream(smt[1]) >> height;
@@ -46,7 +46,7 @@ public:
 		return true;
 	}
 
-	void color_workarea(Rec rec) {
+	void ColorWorkarea(Rec rec) {
 		for (int top = rec.top; top <= rec.down; top++) {
 			if (top < 0 || top > work_area.height - 1) {
 				continue;
@@ -66,7 +66,7 @@ public:
 		/*std::cout << "\nColored Workarea for " << rec.name << ": " << rec.color.color << std::endl;*/
 	}
 
-	bool update_workarea() {
+	bool UpdateWorkarea() {
 		std::list<int> ::iterator it;
 		int rectangle_index;
 		Rec rectangle;
@@ -80,12 +80,12 @@ public:
 		for (it = this->rec_seq.begin(); it != this->rec_seq.end(); ++it) {
 			rectangle_index = *it;
 			rectangle = this->rectangles[rectangle_index];
-			color_workarea(rectangle);
+			ColorWorkarea(rectangle);
 		}
 		return true;
 	}
 
-	bool add_rec(std::vector<std::string>  smt) {
+	bool AddRectangle(std::vector<std::string>  smt) {
 
 		int top, left, height, width, color;
 		std::string name;
@@ -107,7 +107,7 @@ public:
 	}
 
 
-	bool update_rec(std::string rec_name, std::string property_name, int new_value) {
+	bool UpdateRectangle(std::string rec_name, std::string property_name, int new_value) {
 
 		auto it = this->map_p.find(property_name);
 		static const auto map_p_end = map_p.end();
@@ -152,7 +152,7 @@ public:
 		return true;
 	}
 
-	void print_info() {
+/*	void PrintInfo() {
 		std::cout << "\n\t\tChecking Saved Info\n";
 
 		for (int i = 0; i < this->rectangles.size(); i++) {
@@ -173,6 +173,6 @@ public:
 		}
 		seq_str += "\n";
 		std::cout << seq_str;
-	}
+	}*/
 
 };

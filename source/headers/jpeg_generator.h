@@ -2,6 +2,6 @@
 #define JPEG_GENERATOR_H
 
 void myOutput(unsigned char byte);
-int jpeg_generator(WorkArea wa);
+int JpegGenerator(WorkArea wa);
 
 #endif

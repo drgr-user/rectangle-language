@@ -1,8 +1,8 @@
-#include "headers/file_analyzer.h"
+#include "headers/file_analyser.h"
 #include<fstream>
 
 //Semantic Analysis
-bool color_range_is_valid(std::string str_val) {
+bool ColorRangeIsValid(std::string str_val) {
 	int value;
 	std::stringstream(str_val) >> value;
 	if (0 <= value && value <= 255) {
@@ -13,7 +13,7 @@ bool color_range_is_valid(std::string str_val) {
 	}
 }
 
-bool is_positive(std::string str_val) {
+bool IsPositive(std::string str_val) {
 	int value;
 	std::stringstream(str_val) >> value;
 	if (value > 0) {
@@ -24,7 +24,7 @@ bool is_positive(std::string str_val) {
 	}
 }
 
-bool is_comment(std::string input_line) {
+bool IsComment(std::string input_line) {
 	if (input_line.size() >= 2 && input_line[0] == '/' && input_line[1] == '/') {
 		return true;
 	}
@@ -33,7 +33,7 @@ bool is_comment(std::string input_line) {
 	}
 }
 
-bool check_line(std::string input_line, std::string reg_expr) {
+bool CheckLine(std::string input_line, std::string reg_expr) {
 	std::regex str_expr(reg_expr);
 	if (std::regex_match(input_line, str_expr)) {
 		return true;
@@ -44,7 +44,7 @@ bool check_line(std::string input_line, std::string reg_expr) {
 }
 
 //Lexical Analysis
-std::vector<std::string> process_line(std::string input_line, std::string reg_expr, std::string str) {
+std::vector<std::string> ProcessLine(std::string input_line, std::string reg_expr, std::string str) {
 	std::regex str_expr(reg_expr);
 	std::smatch smt;
 	std::vector<std::string> parts;
@@ -56,7 +56,7 @@ std::vector<std::string> process_line(std::string input_line, std::string reg_ex
 }
 
 //Syntax and Semantic Analysis
-Prog analyze_file(std::ifstream& recfile) {
+Prog AnalyseFile(std::ifstream& recfile) {
 
 	bool init_stage = false;
 	bool work_area_set = false;
@@ -83,7 +83,7 @@ Prog analyze_file(std::ifstream& recfile) {
 				/*std::cout << "Initializing\n";*/
 				init_stage = true;
 			}
-			else if (!is_comment(input_text)) {
+			else if (!IsComment(input_text)) {
 				error_msg += std::to_string(line_counter);
 				throw std::invalid_argument(error_msg);
 			}
@@ -95,34 +95,34 @@ Prog analyze_file(std::ifstream& recfile) {
 			if (input_text == "#move") {
 				/*std::cout << "\nMoving stage is started.\n";*/
 				move_stage = true;
-				app.update_workarea();
+				app.UpdateWorkarea();
 			}
 			else {
-				if (check_line(input_text, workarea_reg)) {
-					std::vector<std::string> smt = process_line(input_text, workarea_reg, "workarea");
-					if (!is_positive(smt[1]) || !is_positive(smt[2]) || !color_range_is_valid(smt[3])) {
+				if (CheckLine(input_text, workarea_reg)) {
+					std::vector<std::string> smt = ProcessLine(input_text, workarea_reg, "workarea");
+					if (!IsPositive(smt[1]) || !IsPositive(smt[2]) || !ColorRangeIsValid(smt[3])) {
 						error_msg += std::to_string(line_counter);
 						throw std::invalid_argument(error_msg);
 					}
-					bool make_wa_result = app.make_workarea(smt);
+					bool make_wa_result = app.MakeWorkarea(smt);
 					if (!make_wa_result) {
 						error_msg += std::to_string(line_counter);
 						throw std::invalid_argument(error_msg);
 					}
 				}
-				else if (check_line(input_text, rec_reg)) {
-					std::vector<std::string> smt = process_line(input_text, rec_reg, "rec");
-					if (!is_positive(smt[3]) || !is_positive(smt[4]) || !color_range_is_valid(smt[5])) {
+				else if (CheckLine(input_text, rec_reg)) {
+					std::vector<std::string> smt = ProcessLine(input_text, rec_reg, "rec");
+					if (!IsPositive(smt[3]) || !IsPositive(smt[4]) || !ColorRangeIsValid(smt[5])) {
 						error_msg += std::to_string(line_counter);
 						throw std::invalid_argument(error_msg);;
 					}
-					bool add_rec_result = app.add_rec(smt);
+					bool add_rec_result = app.AddRectangle(smt);
 					if (!add_rec_result) {
 						error_msg += std::to_string(line_counter);
 						throw std::invalid_argument(error_msg);
 					}
 				}
-				else if (is_comment(input_text)) {
+				else if (IsComment(input_text)) {
 					/*std::cout << "\nComment.\n";*/
 				}
 				else {
@@ -134,18 +134,18 @@ Prog analyze_file(std::ifstream& recfile) {
 
 		//looking for moves
 		else if (move_stage) {
-			if (check_line(input_text, move_reg)) {
-				std::vector<std::string> smt = process_line(input_text, move_reg, "move");
+			if (CheckLine(input_text, move_reg)) {
+				std::vector<std::string> smt = ProcessLine(input_text, move_reg, "move");
 				int rec_new_value;
 				std::stringstream(smt[3]) >> rec_new_value;
-				bool update_result = app.update_rec(smt[1], smt[2], rec_new_value);
+				bool update_result = app.UpdateRectangle(smt[1], smt[2], rec_new_value);
 				if (!update_result) {
 					error_msg += std::to_string(line_counter);
 					throw std::invalid_argument(error_msg);
 				}
-				app.update_workarea();
+				app.UpdateWorkarea();
 			}
-			else if (is_comment(input_text)) {
+			else if (IsComment(input_text)) {
 				/*std::cout << "\nComment.\n";*/
 			}
 			else {
