@@ -1,5 +1,5 @@
-#ifndef FILE_ANALAYZER_H
-#define FILE_ANALAYZER_H
+#ifndef FILE_ANALAYSER_H
+#define FILE_ANALAYSER_H
 
 #include "Prog.h"
 
