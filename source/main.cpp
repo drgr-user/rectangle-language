@@ -1,13 +1,13 @@
-#include "headers/file_analyzer.h"
+#include "headers/file_analyser.h"
 #include "headers/jpeg_generator.h"
 #include <fstream>
 #include <string>
 
-int rectangle_language(std::ifstream& f) {
+int RectangleLanguage(std::ifstream& f) {
 	try {
-		Prog prog = analyze_file(f);
+		Prog prog = AnalyseFile(f);
 		std::cerr << "File is processed." << std::endl;
-		jpeg_generator(prog.get_workarea());
+		JpegGenerator(prog.GetWorkarea());
 		std::cerr << "Jpeg is exported." << std::endl;
 	}
 	catch (std::exception e) {
@@ -31,7 +31,7 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 	std::ifstream f(f_str);
-	int result = rectangle_language(f);
+	int result = RectangleLanguage(f);
 	system("pause");
 	return result;
 }
